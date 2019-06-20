@@ -4,7 +4,7 @@ export default function Login( { createAccountToggle, onChange, handleSubmit, us
   return (
     <div className="login">
         <p>User Login</p>
-        <form onSubmit={handleSubmit} >
+        <form onSubmit={handleSubmit}>
           <div className="userName">
           <label>UserName:</label>
           <input name="userName" onChange={(e) => onChange(e)} value={userName} placeholder="Username" type="text" />

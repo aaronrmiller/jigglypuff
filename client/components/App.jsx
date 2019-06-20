@@ -1,16 +1,16 @@
-import React from 'react';
-import UserPage from './UserPage';
-import MainContainer from './MainContainer';
-import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import React from "react";
+import UserPage from "./UserPage";
+import MainContainer from "./MainContainer";
+import { connect } from "react-redux";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const mapStateToProps = store => ({
   onAddItemPage: store.items.onAddItemPage,
   onFavoritesPage: store.items.onFavoritesPage,
-  userInfo: store.items.userInfo,
+  userInfo: store.items.userInfo
 });
 
-function App(props) {
+function App({ onAddItemPage, onFavoritesPage, userInfo }) {
   return (
     <Router>
       <div>
@@ -25,7 +25,26 @@ function App(props) {
           </ul>
         </nav>
         <Route path="/" exact component={UserPage} />
-        <Route path="/home/" render={() => <MainContainer {...props} />} />
+        {/* <Route
+          path="/"
+          render={
+            (props) => {
+              <UserPage
+                {...props}
+              />
+            }
+          }
+          /> */}
+        <Route
+          path="/home/"
+          render={() => (
+            <MainContainer 
+            onAddItemPage={onAddItemPage} 
+            onFavoritesPage={onFavoritesPage}
+            userInfo={userInfo}
+            />
+          )}
+        />
       </div>
     </Router>
   );

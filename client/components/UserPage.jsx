@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Login from './Login';
 import CreateAccount from './CreateAccount';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import * as actions from '../actions/actions';
+
 
 class UserPage extends Component {
   constructor(props) {
@@ -47,6 +49,9 @@ class UserPage extends Component {
           userName: this.state.userName,
           password: this.state.password,
           email: this.state.email
+        })
+        .then(()=> {
+          this.props.history.push('/home')
         });
       }
     );
@@ -88,4 +93,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   null,
   mapDispatchToProps
-)(UserPage);
+)(withRouter(UserPage));

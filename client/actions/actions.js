@@ -106,13 +106,19 @@ export const createAccount = userInfo => (dispatch) => {
     .then(res => res.json())
     .then((res) => {
       console.log('testing getting here', res, res[0]);
-      const { row } = res[0];
+      let { row } = res[0];
       // const username = row
-      const userInfo = {};
       // const username = row.split`,`
+      row = row.split`,`;
+      const username = row[0].slice(1);
+      const user_id = row[1].slice(0,-1);
+      const userInfo = {
+        username,
+        user_id,
+      }
       //"(asdfasdf,16)"}
 
-      return dispatch(createAccountStore(res[0]));
+      return dispatch(createAccountStore(userInfo));
     })
     .catch(err => console.error(err));
 
