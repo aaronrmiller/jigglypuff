@@ -1,11 +1,16 @@
-body {
+body,
+html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background-color: cornsilk;
+  height: 100%;
 }
 
 * {
   box-sizing: border-box;
+}
+#root {
+  height: 100%;
 }
 
 header {
@@ -16,6 +21,59 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+#links {
+  position: absolute;
+  margin: 20px 0px;
+  display: flex;
+  top: 0px;
+  left: calc(50vw - 120px);
+  width: 240px;
+}
+
+#router-wrapper {
+  height: 100%;
+}
+.user-page-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.link {
+  border: 10px solid rgb(180, 211, 251);
+  text-decoration: none;
+  border-radius: 10px;
+  margin: 0px 10px;
+  color: white;
+  background: black;
+  padding: 20px;
+}
+.login-create-acc {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10px;
+  border: 10px solid rgb(238, 245, 255);
+  background: rgb(206, 227, 255);
+  border-radius: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form > * {
+  padding: 10px;
+}
+
+#login-title {
+  padding: 10px;
+  font-size: 2em;
+  font-weight: 800;
 }
 
 .header-left {
@@ -116,8 +174,35 @@ button {
   font-size: 1em;
   background-color: rgb(180, 211, 251);
   border-radius: 15px;
-  padding: 10px;
+  padding: 6px 10px;
+  margin: 6px;
 }
+
+input {
+  padding: 10px;
+  font-size: 1em;
+  border: 5px solid #909bff;
+  border-radius: 10px;
+}
+
+input[type='text']:focus,
+input[type='password']:focus,
+input[type='email']:focus {
+  /* box-shadow: 4px 4px 4px 4px #f89a9a; */
+  background: radial-gradient(rgb(180, 211, 251), rgb(182, 214, 255));
+  outline: none;
+}
+
+input[type='submit']:active {
+  box-shadow: 2px 2px 2px 2px #f89a9a;
+  background: radial-gradient(rgb(180, 211, 251), rgb(182, 214, 255));
+  outline: none;
+}
+
+input[type='submit']:focus {
+  outline: none;
+}
+
 button:active {
   box-shadow: 2px 2px 2px 2px #f89a9a;
   background: radial-gradient(rgb(180, 211, 251), rgb(182, 214, 255));

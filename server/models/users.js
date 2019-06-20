@@ -30,12 +30,18 @@ const usersModel = {
         }
       );
     });
+  },
+  checkUser(userName, password) {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `SELECT username,user_id FROM users WHERE "username"='${userName}' AND "password"='${password}'`,
+        (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        }
+      );
+    });
   }
-  // checkUser(userName, password) {
-  //   return new Promise((resolve, reject) => {
-  //     pool.query
-  //   });
-  // }
 };
 
 // console.log('test password:', pool)

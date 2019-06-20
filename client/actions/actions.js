@@ -49,6 +49,11 @@ export const fetchItems = user_id => dispatch => {
     .catch(err => dispatch(requestItemsFailure(err)));
 };
 
+export const updateItems = updatedItemList => ({
+  type: actionTypes.UPDATE_ITEMS,
+  payload: updatedItemList
+});
+
 function isValidItems(res) {
   return Array.isArray(res);
 }
@@ -72,31 +77,8 @@ export const formOnChange = event => ({
   payload: event
 });
 
-export const acceptPurchase = resMsg => dispatch => {
-  dispatch(fetchProducts());
-  return dispatch({
-    type: types.ACCEPT_PURCHASE,
-    payload: resMsg
-  });
-}
-
-export const createAccount = userInfo => (dispatch) => {
-  console.log('action', userInfo)
-  // return fetch('/api/signup', {
-  //   method: 'POST',
-  //   body: JSON.stringify(userInfo),
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  // })
-  //   .then(res => res.json())
-  //   .then((res) => {
-  //     console.log('comes back?', res);
-  //     return dispatch(createAccountStore(res));
-  //   })
-  //   .catch(err => console.error(err));
-
-  return fetch('/api/signup', {
+export const createAccount = userInfo => dispatch => {
+  return fetch('/signup', {
     method: 'POST',
     body: JSON.stringify(userInfo),
     headers: {
@@ -104,7 +86,7 @@ export const createAccount = userInfo => (dispatch) => {
     }
   })
     .then(res => res.json())
-    .then((res) => {
+    .then(res => {
       console.log('testing getting here', res, res[0]);
       let { row } = res[0];
       // const username = row
@@ -130,3 +112,74 @@ export const createAccountStore = res => ({
   type: actionTypes.CREATE_ACCOUNT_STORE,
   payload: res
 });
+
+// export const acceptPurchase = resMsg => dispatch => {
+//   dispatch(fetchProducts());
+//   return dispatch({
+//     type: types.ACCEPT_PURCHASE,
+//     payload: resMsg
+//   });
+// };
+export const search_by = banana => ({
+  type: actionTypes.SEARCH_BY,
+  payload: banana
+});
+
+export const search_byClick = searchBy => dispatch => {
+  // console.log({ item_name: searchBy });
+  return (
+    fetch('/api/search/', {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify({ item_name: searchBy }), // data can be `string` or {object}!
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        // getting information from back en via res.send
+        console.log(res);
+        return dispatch(createCategory(res));
+      })
+      // handeling errors
+      .catch(err => console.error(err))
+  );
+};
+
+// send info to state
+export const createCategory = res => ({
+  type: actionTypes.SEARCH_BYCLICK,
+  payload: res
+});
+
+// send login info
+
+export const make_login = accInfo => dispatch => {
+  return fetch('/api/login', {
+    method: 'POST',
+    body: JSON.stringify(accInfo),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(res => res.json())
+    .then(res => {
+      console.log('heres the login result', res);
+      if(res.length === 0){
+        return dispatch(invalidU());
+      } else {
+        return dispatch(login(res[0]));
+      }
+      
+    });
+};
+
+export const invalidU = () => ({
+  type: actionTypes.INVALIDU,
+})
+export const login = res => ({
+  type: actionTypes.LOGIN,
+  payload: res
+});
+
+

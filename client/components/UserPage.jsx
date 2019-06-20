@@ -5,21 +5,27 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../actions/actions';
 
+const mapStateToProps = store => ({
+  logedIn: store.items.logedIn,
+});
+
 
 class UserPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       createAccountToggle: false,
-      userName: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      email: ''
+      loginfail: false,
+      userName: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      email: ""
     };
     this.createAccountToggle = this.createAccountToggle.bind(this);
     this.onChange = this.onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
   }
   createAccountToggle(e) {
     this.setState({
@@ -43,7 +49,7 @@ class UserPage extends Component {
         [name]: value
       },
       () => {
-        this.props.history.push('/home')
+        // this.props.history.push('/home')
         this.props.createAccount({
           firstName: this.state.firstName,
           lastName: this.state.lastName,
@@ -58,8 +64,30 @@ class UserPage extends Component {
     );
   }
 
+  handleLoginSubmit(e) {
+    e.preventDefault();
+    // console.log('form submitted', this.state)
+    const { name, value } = e.target;
+    this.setState(
+      {
+        [name]: value
+      },
+      () => {
+        // if (this.props.logedIn) this.props.history.push('/home') 
+        console.log('test props check, testin logedIn', this.props.logedIn);
+        this.props.login({
+          userName: this.state.userName,
+          password: this.state.password 
+        })
+        .then(()=> {
+          if(this.props.logedIn) this.props.history.push('/home')})
+      }
+    );
+  }
+  
+
   render() {
-    // console.log(this.state)
+    // console.log('test', props)
     return (
       <div className="user-page-wrapper">
         {this.state.createAccountToggle ? (
@@ -76,7 +104,7 @@ class UserPage extends Component {
         ) : (
           <Login
             createAccountToggle={this.createAccountToggle}
-            handleSubmit={this.handleSubmit}
+            handleLoginSubmit={this.handleLoginSubmit}
             onChange={this.onChange}
             userName={this.state.userName}
             password={this.state.password}
@@ -88,10 +116,11 @@ class UserPage extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  createAccount: accountInfo => dispatch(actions.createAccount(accountInfo))
+  createAccount: accountInfo => dispatch(actions.createAccount(accountInfo)),
+  login: accountInfo => dispatch(actions.make_login(accountInfo))
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withRouter(UserPage));

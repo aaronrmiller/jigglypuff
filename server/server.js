@@ -4,6 +4,26 @@ const bodyParser = require('body-parser');
 const routes = require('./routes/api');
 const { PORT } = process.env;
 const app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+server.listen(PORT);
+
+io.on('connection', socket => {
+  socket.on('message', msgData => {
+    socket.emit('addedItem', {
+      user_id: 1,
+      description: 'dope',
+      pic_url: '/static/2.jpg'
+    }); // when the item is added to the DB by any user, an 'addedItem' message is emiited,
+    // which will be broadcasted to all users, so that they can update their local state.
+    console.log('received message from client: ', msgData);
+  });
+
+  socket.on('disconnect', function() {
+    io.emit('user disconnected');
+  });
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,6 +44,6 @@ app.use(function(err, req, res, next) {
   res.status(404).json(err);
 });
 
-app.listen(PORT, () => {
-  console.log(`server listening on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`server listening on port ${PORT}`);
+// });

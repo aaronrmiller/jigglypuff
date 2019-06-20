@@ -1,5 +1,17 @@
-const Items = require('../models/items');
+const Items = require("../models/items");
 const itemController = {};
+///SEARCH FUTURE
+itemController.searchBy = (req, res, next) => {
+  Items.searchBy(req.body.item_name)
+    .then(result => {
+      res.locals.search = result.rows;
+      return next();
+    })
+    .catch(err => {
+      return next(err);
+    });
+};
+////////////////SEARCH FUTURE END
 
 /**
  * getAll - returns all Items
