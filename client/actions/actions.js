@@ -78,7 +78,7 @@ export const formOnChange = event => ({
 });
 
 export const createAccount = userInfo => dispatch => {
-  return fetch('/signup', {
+  return fetch('/api/signup', {
     method: 'POST',
     body: JSON.stringify(userInfo),
     headers: {
@@ -164,7 +164,7 @@ export const make_login = accInfo => dispatch => {
   })
     .then(res => res.json())
     .then(res => {
-      console.log('heres the login result', res);
+      // console.log('heres the login result', res);
       if(res.length === 0){
         return dispatch(invalidU());
       } else {

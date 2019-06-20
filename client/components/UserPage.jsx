@@ -49,7 +49,7 @@ class UserPage extends Component {
         [name]: value
       },
       () => {
-        // this.props.history.push('/home')
+        this.props.history.push('/home');
         this.props.createAccount({
           firstName: this.state.firstName,
           lastName: this.state.lastName,
