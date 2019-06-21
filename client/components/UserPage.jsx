@@ -49,7 +49,7 @@ class UserPage extends Component {
         [name]: value
       },
       () => {
-        this.props.history.push('/home');
+        // this.props.history.push('/home');
         this.props.createAccount({
           firstName: this.state.firstName,
           lastName: this.state.lastName,
@@ -57,9 +57,11 @@ class UserPage extends Component {
           password: this.state.password,
           email: this.state.email
         })
+        .then(()=> {
+          this.props.history.push('/home')
+        });
         // .then(()=> {
-        //   this.props.history.push('/home')
-        // });
+        //   if(this.props.logedIn) this.props.history.push('/home')})
       }
     );
   }

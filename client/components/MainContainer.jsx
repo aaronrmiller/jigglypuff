@@ -6,7 +6,7 @@ import FavoritesModal from './FavoritesModal';
 import AddItemModal from './AddItemModal';
 
 export default function MainContainer({ onFavoritesPage, onAddItemPage, userInfo }) {
-  console.log('rerendered main container', onFavoritesPage);
+  console.log('rerendered main container', userInfo);
   return (
     <div>
       <Header />

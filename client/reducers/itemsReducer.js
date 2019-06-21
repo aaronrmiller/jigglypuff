@@ -8,7 +8,8 @@ const initialState = {
     userID: "test_user",
     description: "test_descript"
   },
-  userInfo: { username: "bob", user_id: 1 },
+  // userInfo: { username: "bob", user_id: 1 },
+  userInfo: {},
   onFavoritesPage: false,
   onAddItemPage: false,
   fetchItemsStatus: "",
